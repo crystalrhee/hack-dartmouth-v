@@ -1,17 +1,7 @@
-<<<<<<< HEAD
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-=======
-node_modules/
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
->>>>>>> 6881b8ff8eedf465a70639ad086919743bad50bd
 
 # testing
 /coverage
@@ -29,7 +19,3 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-client/node_modules
-auth-server/node_modules
-*ignore.jsx
