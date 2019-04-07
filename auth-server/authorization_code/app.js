@@ -58,7 +58,7 @@ app.get('/login', function (req, res) {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = 'user-read-private user-read-email user-read-playback-state';
+  var scope = 'user-read-private user-read-email user-read-playback-state user-top-read';
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -242,7 +242,7 @@ function listEvents(auth) {
         const endDate = new Date(event.end.dateTime || event.end.date);
         const dateStr = startDate.toDateString();
         const colorCode = {
-          11: 'Gym',
+          11: 'Meetings',
           2: 'Lunch',
           9: 'Work'
         };
