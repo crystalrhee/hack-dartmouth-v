@@ -67,17 +67,11 @@ class App extends Component {
           <div className="container">
             <h1 className="dashboard">Dashboard</h1>
           </div>
-          <div className="container">
-            <ul>
-              <li><NavLink to="/day">Day</NavLink></li>
-              <li><NavLink to="/year">Year</NavLink></li>
-            </ul>
-          </div>
           <div className="container row">
             <Route path="/" component={Home}/>
             <Route path="/" component={Spotify}/>
             <Route path="/" component={Pie}/>
-            <Route path="/year" component={Year}/>
+            <Route path="/" component={Year}/>
           </div>
         </div>
         <a href='http://localhost:8888' > Login to Spotify </a>
@@ -87,7 +81,8 @@ class App extends Component {
         <div>
           <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
         </div>
-        { this.state.loggedIn &&
+        { 
+          this.state.loggedIn &&
           <button onClick={() => this.getNowPlaying()}>
             Check Now Playing
           </button>
