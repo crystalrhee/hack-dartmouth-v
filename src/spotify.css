@@ -65,22 +65,10 @@ th {
     padding: .75rem;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background: transparent;
-}
-
 td {
 	border: 0;
 	vertical-align: middle;
 	padding: .75rem;
-}
-
-.card-table tr td:first-child, .card-table tr th:first-child {
-    padding-left: 1.5rem;
-}
-
-.card-table tr:first-child td, .card-table tr:first-child th {
-    border-top: 0;
 }
 
 .avatar {
