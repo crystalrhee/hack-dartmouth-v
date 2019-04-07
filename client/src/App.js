@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import moment from 'moment';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
