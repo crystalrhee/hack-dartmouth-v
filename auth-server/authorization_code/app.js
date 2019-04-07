@@ -242,7 +242,7 @@ function listEvents(auth) {
         const endDate = new Date(event.end.dateTime || event.end.date);
         const dateStr = startDate.toDateString();
         const colorCode = {
-          11: 'Gym',
+          11: 'Meetings',
           2: 'Lunch',
           9: 'Work'
         };
