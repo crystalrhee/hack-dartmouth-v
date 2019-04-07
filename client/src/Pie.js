@@ -20,7 +20,7 @@ class Pie extends Component {
     let pie = d3.pie()(data);
     return (
       <div class="col col-md-6">
-        <div class="card">
+        <div class="card pie-card">
           <h3>Time Allocations in the Past 3 Days</h3>
           <svg height={height} width={width}>
             <g tranform={'translate(${width/2},${height/2})'}>

@@ -2,6 +2,7 @@ g {
   transform: translate(70%, 35%);
 }
 
-.card {
+.pie-card {
 	min-height: 400px;
+	margin-bottom: 20px;
 }

@@ -3,7 +3,6 @@ import './App.css';
 import BarChart from './chart.js';
 import {
   Route,
-  NavLink,
   HashRouter
 } from "react-router-dom";
 import Home from "./Home";
