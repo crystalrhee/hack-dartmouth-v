@@ -35,7 +35,7 @@ const TOKEN_PATH = 'token.json';
  * @param  {number} length The length of the string
  * @return {string} The generated string
  */
-var generateRandomString = function(length) {
+var generateRandomString = function (length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -50,9 +50,9 @@ var stateKey = 'spotify_auth_state';
 var app = express();
 
 app.use(express.static(__dirname + '/public'))
-   .use(cookieParser());
+  .use(cookieParser());
 
-app.get('/login', function(req, res) {
+app.get('/login', function (req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
@@ -69,7 +69,7 @@ app.get('/login', function(req, res) {
     }));
 });
 
-app.get('/callback', function(req, res) {
+app.get('/callback', function (req, res) {
 
   // your application requests refresh and access tokens
   // after checking the state parameter
@@ -98,11 +98,11 @@ app.get('/callback', function(req, res) {
       json: true
     };
 
-    request.post(authOptions, function(error, response, body) {
+    request.post(authOptions, function (error, response, body) {
       if (!error && response.statusCode === 200) {
 
         var access_token = body.access_token,
-            refresh_token = body.refresh_token;
+          refresh_token = body.refresh_token;
 
         var options = {
           url: 'https://api.spotify.com/v1/me',
@@ -111,7 +111,7 @@ app.get('/callback', function(req, res) {
         };
 
         // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
+        request.get(options, function (error, response, body) {
           console.log(body);
         });
 
@@ -131,7 +131,7 @@ app.get('/callback', function(req, res) {
   }
 });
 
-app.get('/refresh_token', function(req, res) {
+app.get('/refresh_token', function (req, res) {
 
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
@@ -145,7 +145,7 @@ app.get('/refresh_token', function(req, res) {
     json: true
   };
 
-  request.post(authOptions, function(error, response, body) {
+  request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       var access_token = body.access_token;
       res.send({
@@ -235,11 +235,39 @@ function listEvents(auth) {
     if (err) return console.log('The API returned an error: ' + err);
     const events = res.data.items;
     if (events.length) {
-      console.log('Upcoming 10 events:');
-      events.map((event, i) => {
-        const start = event.start.dateTime || event.start.date;
-        console.log(`${start} - ${event.summary}`);
+      // console.log('Upcoming 10 events:');
+      let results = {}
+      events.forEach((event, i) => {
+        const startDate = new Date(event.start.dateTime || event.start.date);
+        const endDate = new Date(event.end.dateTime || event.end.date);
+        const dateStr = startDate.toDateString();
+        const colorCode = {
+          11: 'Gym',
+          2: 'Lunch',
+          9: 'Work'
+        };
+        const event_type = colorCode[event.colorId || -1];
+        if (event_type) {
+          const hours = Math.abs(endDate - startDate) / 36e5;
+          if (results[dateStr]) {
+            results[dateStr].push([event_type, hours])
+          } else {
+            results[dateStr] = [[event_type, hours]]
+          }
+        }
       });
+      let output = {}
+      for (var key in results) {
+        const sum = results[key].reduce((acc, curr) => {
+          return acc + curr[1];
+        }, 0)
+        date_ratio = {}
+        results[key].forEach((type, i) => {
+          date_ratio[type[0]] = type[1] / sum
+        })
+        output[key] = date_ratio
+      }
+      console.log(output)
     } else {
       console.log('No upcoming events found.');
     }
