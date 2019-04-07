@@ -155,13 +155,6 @@ app.get('/refresh_token', function (req, res) {
   });
 });
 
-// Load client secrets from a local file.
-fs.readFile('credentials.json', (err, content) => {
-  if (err) return console.log('Error loading client secret file:', err);
-  // Authorize a client with credentials, then call the Google Calendar API.
-  authorize(JSON.parse(content), listEvents);
-});
-
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
  * given callback function.
@@ -220,12 +213,13 @@ function getAccessToken(oAuth2Client, callback) {
  * Lists the next 10 events on the user's primary calendar.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function listEvents(auth) {
+function listEvents(auth, callback) {
+  response = {}
   const calendar = google.calendar({
     version: 'v3',
     auth
   });
-  calendar.events.list({
+  return calendar.events.list({
     calendarId: 'primary',
     // timeMin: (new Date()).toISOString(),
     // maxResults: 10,
@@ -256,23 +250,40 @@ function listEvents(auth) {
           }
         }
       });
-      let output = {}
-      for (var key in results) {
-        const sum = results[key].reduce((acc, curr) => {
-          return acc + curr[1];
-        }, 0)
-        date_ratio = {}
-        results[key].forEach((type, i) => {
-          date_ratio[type[0]] = type[1] / sum
-        })
-        output[key] = date_ratio
-      }
-      console.log(output)
+      // let output = {}
+      // for (var key in results) {
+      //   const sum = results[key].reduce((acc, curr) => {
+      //     return acc + curr[1];
+      //   }, 0)
+      //   date_ratio = {}
+      //   results[key].forEach((type, i) => {
+      //     date_ratio[type[0]] = type[1] / sum
+      //   })
+      //   output[key] = date_ratio
+      // }
+      callback(results);
     } else {
       console.log('No upcoming events found.');
     }
   });
+  // console.log(response)
+  // return response
 }
+
+app.get('/calendar', function (req, res) {
+
+  // Load client secrets from a local file.
+  fs.readFile('credentials-ivan.json', (err, content) => {
+    if (err) return console.log('Error loading client secret file:', err);
+    // Authorize a client with credentials, then call the Google Calendar API.
+    authorize(JSON.parse(content), (auth) => {
+      listEvents(auth, (result) => {
+        console.log('response: ', result)
+        res.json(result)
+      });
+    })
+  });
+});
 
 console.log('Listening on 8888');
 app.listen(8888);
