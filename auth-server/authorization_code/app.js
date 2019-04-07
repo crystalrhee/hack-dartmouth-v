@@ -248,7 +248,6 @@ function listEvents(auth) {
         };
         const event_type = colorCode[event.colorId || -1];
         if (event_type) {
-          const key = [dateStr, event_type];
           const hours = Math.abs(endDate - startDate) / 36e5;
           if (results[dateStr]) {
             results[dateStr].push([event_type, hours])
