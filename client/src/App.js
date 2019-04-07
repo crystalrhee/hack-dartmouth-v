@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import moment from 'moment';
+import BarChart from './chart.js'
 
 import SpotifyWebApi from 'spotify-web-api-js';
 const spotifyApi = new SpotifyWebApi();
@@ -56,6 +56,7 @@ class App extends Component {
             Check Now Playing
           </button>
         }
+        <BarChart></BarChart>
       </div>
     );
   }
