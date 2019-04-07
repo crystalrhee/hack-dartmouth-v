@@ -1,3 +1,7 @@
 g {
   transform: translate(70%, 35%);
 }
+
+.card {
+	min-height: 400px;
+}

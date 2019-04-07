@@ -11,7 +11,7 @@ class Home extends Component {
           </div>
           <div>
             <p className="title">Meetings</p>
-            <p>25 meetings</p>
+            <p>25 hours</p>
           </div>
         </div>
         <div className="card">
@@ -20,7 +20,7 @@ class Home extends Component {
           </div>
           <div>
             <p className="title">Work</p>
-            <p>41 Stories</p>
+            <p>41 hours</p>
           </div>
         </div>
         <div className="card">
@@ -29,7 +29,7 @@ class Home extends Component {
           </div>
           <div>
             <p className="title">Break</p>
-            <p>4 lunches</p>
+            <p>4 hours</p>
           </div>
         </div>
       </div>
