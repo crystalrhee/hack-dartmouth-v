@@ -227,8 +227,8 @@ function listEvents(auth) {
   });
   calendar.events.list({
     calendarId: 'primary',
-    timeMin: (new Date()).toISOString(),
-    maxResults: 10,
+    // timeMin: (new Date()).toISOString(),
+    // maxResults: 10,
     singleEvents: true,
     orderBy: 'startTime',
   }, (err, res) => {
