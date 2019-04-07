@@ -8,6 +8,11 @@ import Home from "./Home";
 import Spotify from "./Spotify";
 import Week from "./Week";
 import logo from './react-logo.png';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css";
+
+
  
 class App extends Component {
   render() {
@@ -19,14 +24,16 @@ class App extends Component {
               <img className="logo" src={logo}/> 
             </div>
           </div>
-          <h1 className="container">Dashboard</h1>
+          <div class="container">
+            <h1 class="dashboard">Dashboard</h1>
+          </div>
           <div className="container">
             <ul>
               <li><NavLink to="/day">Day</NavLink></li>
               <li><NavLink to="/week">Week</NavLink></li>
             </ul>
           </div>
-          <div className="content">
+          <div className="container row">
             <Route path="/" component={Home}/>
             <Route path="/" component={Spotify}/>
             <Route path="/week" component={Week}/>

@@ -3,11 +3,16 @@ import React, { Component } from "react";
 class Week extends Component {
   render() {
     return (
-      <div class="container">
-        <h2>Week</h2>
-        <p>The easiest thing to do is post on
-        our <a href="http://forum.kirupa.com">forums</a>.
-        </p>
+      <div class="col col-md-6">
+        <div class="card">
+          <div class="circle">
+            <i class="fas fa-4x fa-phone-volume"></i>
+          </div>
+          <div>
+            <p class="title">Meetings</p>
+            <p>25 meetings</p>
+          </div>
+        </div>
       </div>
     );
   }

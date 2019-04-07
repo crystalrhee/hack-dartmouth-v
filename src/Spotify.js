@@ -4,7 +4,7 @@ import "./spotify.css";
 class Spotify extends Component {
   render() {
     return (
-      <div class="container">
+      <div class="col col-lg-6">
         <div class="activity-card">
           <div class="activity-header">
             <h3>Top 5 Artists</h3>
@@ -47,6 +47,14 @@ class Spotify extends Component {
               <td>Ariana Grande</td>
               <td>God is a Woman</td>
               <td>17</td>
+            </tr>
+            <tr>
+              <td class="w-1">
+                <img class="avatar" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"/>
+              </td>
+              <td>Ariana Grande</td>
+              <td>Breathin</td>
+              <td>16</td>
             </tr>
           </table>
         </div>
