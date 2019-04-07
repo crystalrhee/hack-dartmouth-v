@@ -1,13 +1,63 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import "./spotify.css";
+
+import SpotifyWebApi from 'spotify-web-api-js';
+const spotifyApi = new SpotifyWebApi();
  
 class Spotify extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      topTracks: []
+      }
+  }
+  
+
+  componentDidMount() {
+    spotifyApi.getMyTopTracks({time_range: "short_term"}).then((response) => {
+
+      let topTracks = response.items.slice(0, 5);
+
+      spotifyApi.getAudioFeaturesForTracks(_.map(topTracks, track => {
+        return track.id;
+      })).then(response => {
+        for (let i = 0; i < response.audio_features.length; i++) {
+          topTracks[i].features = response.audio_features[i];
+        }
+
+        this.setState({topTracks: topTracks})
+
+      })
+    })
+  }
+
   render() {
+
+    let tracks = [];
+
+    if (this.state.topTracks.length > 0) {
+
+      _.map(this.state.topTracks, track => {
+        tracks.push(
+          <tr key={track.id}>
+            <td className="w-1">
+                <img className="avatar" src={track.album.images[2].url}/>
+              </td>
+              <td>{track.artists[0].name}</td>
+              <td>{track.name}</td>
+              <td>{track.features.valence}</td>
+          </tr>
+        )
+      })
+    }
+
     return (
       <div className="col col-lg-6">
         <div className="activity-card">
           <div className="activity-header">
-            <h3>Top 5 Artists</h3>
+            <h3>Top 5 Songs</h3>
           </div>
           <div></div>
           <table>
@@ -15,54 +65,15 @@ class Spotify extends Component {
             <tr>
               <th colSpan="2">Artist</th>
               <th>Song</th>
-              <th>Times Played</th>
+              <th>Postiveness</th>
             </tr>
-            <tr>
-              <td className="w-1">
-                <img className="avatar" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"/>
-              </td>
-              <td>Ariana Grande</td>
-              <td>7 Rings</td>
-              <td>51</td>
-            </tr>
-            <tr>
-              <td className="w-1">
-                <img className="avatar" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"/>
-              </td>
-              <td>Ariana Grande</td>
-              <td>Break up with your girlfriend, I'm bored</td>
-              <td>21</td>
-            </tr>
-            <tr>
-              <td className="w-1">
-                <img className="avatar" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"/>
-              </td>
-              <td>Ariana Grande</td>
-              <td>Thank u, next</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <td className="w-1">
-                <img className="avatar" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"/>
-              </td>
-              <td>Ariana Grande</td>
-              <td>God is a Woman</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td className="w-1">
-                <img className="avatar" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"/>
-              </td>
-              <td>Ariana Grande</td>
-              <td>Breathin</td>
-              <td>16</td>
-            </tr>
+            {tracks}
             </tbody>
           </table>
         </div>
       </div>
     );
-  }
+    }
 }
  
 export default Spotify;
